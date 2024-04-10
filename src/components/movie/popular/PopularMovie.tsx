@@ -6,7 +6,7 @@ const PopularMovie: FC = () => {
     return (
         <section>
             <h2 className="pb-6 text-xl font-bold">Popular Movies</h2>
-            <section className="flex justify-between flex-wrap flex-col gap-3 md:flex-row">
+            <section className="flex justify-between flex-wrap flex-col gap-x-3 gap-y-6 md:flex-row">
                 {popularMovies.results.slice(0, 20).map((popularMovie) => {
                     return (
                         <PopularMovieCard

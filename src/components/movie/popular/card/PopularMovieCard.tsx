@@ -30,11 +30,11 @@ const PopularMovieCard: FC<Props> = ({
             <Image
                 src={`http://image.tmdb.org/t/p/w500${imgSrc}`}
                 alt={title}
-                width={400}
-                height={300}
-                className="rounded-md sm:w-full w-[550px]"
+                width={250}
+                height={350}
+                className="rounded-md sm:w-full"
             />
-            <div className="p-4 absolute bottom-0 left-0 bg-opacity-40 bg-gray-900 backdrop-filter backdrop-blur-sm w-full">
+            <div className="rounded-b-md p-4 absolute bottom-0 left-0 bg-opacity-40 bg-gray-900 backdrop-filter backdrop-blur-sm w-full">
                 <h3 className="text-teal-500 font-bold overflow-ellipsis">
                     {title.length > 25 ? `${title.slice(0, 25)}...` : title}
                     {/* {title} */}
