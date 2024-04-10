@@ -1,6 +1,7 @@
 import { movieGenres } from "@/lib/placeholder-data";
 import Image from "next/image";
 import { FC } from "react";
+import { IMAGE_URL } from "@/constants/imageUrl";
 
 type Props = {
     imgSrc: string;
@@ -10,7 +11,7 @@ type Props = {
     original_language: string;
 };
 
-const PopularMovieCard: FC<Props> = ({
+const MovieCard: FC<Props> = ({
     imgSrc,
     title,
     genre_ids,
@@ -25,13 +26,21 @@ const PopularMovieCard: FC<Props> = ({
         }
     });
 
+    let formattedImage = (imgSrc: string) => {
+        if (imgSrc === null) {
+            return "https://picsum.photos/200/300?random=1";
+        }
+
+        return `${IMAGE_URL}${imgSrc}`;
+    };
+
     return (
         <section className="relative">
             <Image
-                src={`http://image.tmdb.org/t/p/w500${imgSrc}`}
+                src={formattedImage(imgSrc)}
                 alt={title}
-                width={250}
-                height={350}
+                width={390}
+                height={400}
                 className="rounded-md sm:w-full"
             />
             <div className="rounded-b-md p-4 absolute bottom-0 left-0 bg-opacity-40 bg-gray-900 backdrop-filter backdrop-blur-sm w-full">
@@ -61,4 +70,4 @@ const PopularMovieCard: FC<Props> = ({
     );
 };
 
-export default PopularMovieCard;
+export default MovieCard;

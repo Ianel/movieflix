@@ -1,30 +1,9 @@
-"use client";
-
-import { FC, useEffect, useState } from "react";
-import PopularMovieCard from "@/components/common/card/MovieCard";
+import { FC } from "react";
+import SearchedMovieCard from "@/components/common/card/MovieCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { BASE_URL } from "@/constants/apiUrl";
 
-const PopularMovie: FC = () => {
-    const [popularMovies, setPopularMovies] = useState([]);
-
-    const fetchPopularMovies = async () => {
-        try {
-            const response = await fetch(
-                `${BASE_URL}/movie/popular?api_key=e561105e6f93ee50d989fc4c6dc71860`
-            );
-            const data = await response.json();
-            setPopularMovies(data.results);
-        } catch (error: any) {
-            console.error(error.message);
-        }
-    };
-
-    useEffect(() => {
-        fetchPopularMovies();
-    }, []);
-
+const SearchedMovie: FC<{ searchedMovies: any }> = ({ searchedMovies }) => {
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1365 },
@@ -59,28 +38,30 @@ const PopularMovie: FC = () => {
 
     return (
         <section>
-            <h2 className="pb-6 text-xl font-bold">Popular Movies</h2>
+            <h2 className="pb-6 text-xl font-bold">Searched Movies</h2>
             {/* <section className="flex justify-between flex-wrap flex-col gap-x-3 gap-y-6 md:flex-row"> */}
+
             <Carousel itemClass="px-2" responsive={responsive}>
-                {!!popularMovies &&
-                    popularMovies.map((popularMovie: any) => {
+                {!!searchedMovies &&
+                    searchedMovies.map((searchedMovie: any) => {
                         return (
-                            <PopularMovieCard
-                                key={popularMovie.id}
-                                imgSrc={popularMovie.poster_path}
-                                title={popularMovie.title}
-                                genre_ids={popularMovie.genre_ids}
-                                vote={popularMovie.vote_average}
+                            <SearchedMovieCard
+                                key={searchedMovie.id}
+                                imgSrc={searchedMovie.poster_path}
+                                title={searchedMovie.title}
+                                genre_ids={searchedMovie.genre_ids}
+                                vote={searchedMovie.vote_average}
                                 original_language={
-                                    popularMovie.original_language
+                                    searchedMovie.original_language
                                 }
                             />
                         );
                     })}
             </Carousel>
+
             {/* </section> */}
         </section>
     );
 };
 
-export default PopularMovie;
+export default SearchedMovie;
