@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Search from "../search/Search";
+import Search from "@/components/hero/search/Search";
 import Link from "next/link";
 
 const Hero: FC = () => {
