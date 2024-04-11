@@ -1,9 +1,30 @@
-import { FC } from "react";
-import SearchedMovieCard from "@/components/common/card/MovieCard";
+"use client";
+
+import { FC, useEffect, useState } from "react";
+import UpcomingMovieCard from "@/components/common/card/MovieCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { BASE_URL } from "@/constants/apiUrl";
 
-const SearchedMovie: FC<{ searchedMovies: any }> = ({ searchedMovies }) => {
+const UpcomingMovie: FC = () => {
+    const [upcomingMovies, setUpcomingMovies] = useState([]);
+
+    const fetchUpcomingMovies = async () => {
+        try {
+            const response = await fetch(
+                `${BASE_URL}/movie/upcoming?language=en-US&page=1&api_key=e561105e6f93ee50d989fc4c6dc71860`
+            );
+            const data = await response.json();
+            setUpcomingMovies(data.results);
+        } catch (error: any) {
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchUpcomingMovies();
+    }, []);
+
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1365 },
@@ -37,40 +58,29 @@ const SearchedMovie: FC<{ searchedMovies: any }> = ({ searchedMovies }) => {
     };
 
     return (
-        <section>
-            <div className="pb-6 flex justify-between items-center">
-                <h2 className=" text-xl font-bold">Searched Movies</h2>
-                <button
-                    className="bg-teal-700 text-white rounded-md px-4 py-1"
-                    onClick={() => window.location.reload()}
-                >
-                    Reload
-                </button>
-            </div>
-
+        <section className="mt-12">
+            <h2 className="pb-6 text-xl font-bold">Upcoming Movies</h2>
             {/* <section className="flex justify-between flex-wrap flex-col gap-x-3 gap-y-6 md:flex-row"> */}
-
             <Carousel itemClass="px-2" responsive={responsive}>
-                {!!searchedMovies &&
-                    searchedMovies.map((searchedMovie: any) => {
+                {!!upcomingMovies &&
+                    upcomingMovies.map((upcomingMovie: any) => {
                         return (
-                            <SearchedMovieCard
-                                key={searchedMovie.id}
-                                imgSrc={searchedMovie.poster_path}
-                                title={searchedMovie.title}
-                                genre_ids={searchedMovie.genre_ids}
-                                vote={searchedMovie.vote_average}
+                            <UpcomingMovieCard
+                                key={upcomingMovie.id}
+                                imgSrc={upcomingMovie.poster_path}
+                                title={upcomingMovie.title}
+                                genre_ids={upcomingMovie.genre_ids}
+                                vote={upcomingMovie.vote_average}
                                 original_language={
-                                    searchedMovie.original_language
+                                    upcomingMovie.original_language
                                 }
                             />
                         );
                     })}
             </Carousel>
-
             {/* </section> */}
         </section>
     );
 };
 
-export default SearchedMovie;
+export default UpcomingMovie;

@@ -1,8 +1,11 @@
 "use client";
 
 import Hero from "@/components/hero/Hero";
+import NowPlayingMovie from "@/components/movie/nowPlaying/NowPlayingMovie";
 import PopularMovie from "@/components/movie/popular/PopularMovie";
 import SearchedMovie from "@/components/movie/searched/SearchedMovie";
+import TopRatedMovie from "@/components/movie/topRated/TopRatedMovie";
+import UpcomingMovie from "@/components/movie/upcoming/UpcomingMovie";
 import states from "@/states";
 import { useSnapshot } from "valtio";
 
@@ -16,7 +19,12 @@ export default function Home() {
             {searchedMovies ? (
                 <SearchedMovie searchedMovies={searchedMovies} />
             ) : (
-                <PopularMovie />
+                <>
+                    <PopularMovie />
+                    <TopRatedMovie />
+                    <UpcomingMovie />
+                    <NowPlayingMovie />
+                </>
             )}
         </main>
     );

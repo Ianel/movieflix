@@ -19,10 +19,15 @@ const Search: FC = () => {
                 type="search"
                 placeholder="Enter the title of a movie"
                 name="searchQuery"
+                required
             />
             <button className="w-full md:w-48 bg-teal-700 text-white px-4 py-2 rounded-md">
                 Search
             </button>
+            {state.errors?.searchQuery &&
+                state.errors?.searchQuery.map((error: any) => {
+                    return <p key={error}>{error}</p>;
+                })}
         </form>
     );
 };

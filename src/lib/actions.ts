@@ -5,12 +5,12 @@ import { z } from "zod";
 
 const schema = z.object({
     searchQuery: z.string({
-        invalid_type_error: "You must enter a valid movie name"
+        invalid_type_error: "You must enter a valid movie name",
     })
-})
+});
 
 export async function searchMovie(prevState: any, formData: FormData) {
-    const validatedFields = schema.safeParse({
+    const validatedFields = schema.required().safeParse({
         searchQuery: formData.get("searchQuery")
     });
 

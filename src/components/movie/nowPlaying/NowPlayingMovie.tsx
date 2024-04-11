@@ -1,28 +1,28 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import PopularMovieCard from "@/components/common/card/MovieCard";
+import NowPlayingMovieCard from "@/components/common/card/MovieCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { BASE_URL } from "@/constants/apiUrl";
 
-const PopularMovie: FC = () => {
-    const [popularMovies, setPopularMovies] = useState([]);
+const NowPlayingMovie: FC = () => {
+    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 
-    const fetchPopularMovies = async () => {
+    const fetchNowPlayingMovies = async () => {
         try {
             const response = await fetch(
-                `${BASE_URL}/movie/popular?language=en-US&page=1&api_key=e561105e6f93ee50d989fc4c6dc71860`
+                `${BASE_URL}/movie/now_playing?language=en-US&page=1&api_key=e561105e6f93ee50d989fc4c6dc71860`
             );
             const data = await response.json();
-            setPopularMovies(data.results);
+            setNowPlayingMovies(data.results);
         } catch (error: any) {
             console.error(error.message);
         }
     };
 
     useEffect(() => {
-        fetchPopularMovies();
+        fetchNowPlayingMovies();
     }, []);
 
     const responsive = {
@@ -58,21 +58,21 @@ const PopularMovie: FC = () => {
     };
 
     return (
-        <section>
-            <h2 className="pb-6 text-xl font-bold">Popular Movies</h2>
+        <section className="mt-12">
+            <h2 className="pb-6 text-xl font-bold">Now Playing Movies</h2>
             {/* <section className="flex justify-between flex-wrap flex-col gap-x-3 gap-y-6 md:flex-row"> */}
             <Carousel itemClass="px-2" responsive={responsive}>
-                {!!popularMovies &&
-                    popularMovies.map((popularMovie: any) => {
+                {!!nowPlayingMovies &&
+                    nowPlayingMovies.map((nowPlayingMovie: any) => {
                         return (
-                            <PopularMovieCard
-                                key={popularMovie.id}
-                                imgSrc={popularMovie.poster_path}
-                                title={popularMovie.title}
-                                genre_ids={popularMovie.genre_ids}
-                                vote={popularMovie.vote_average}
+                            <NowPlayingMovieCard
+                                key={nowPlayingMovie.id}
+                                imgSrc={nowPlayingMovie.poster_path}
+                                title={nowPlayingMovie.title}
+                                genre_ids={nowPlayingMovie.genre_ids}
+                                vote={nowPlayingMovie.vote_average}
                                 original_language={
-                                    popularMovie.original_language
+                                    nowPlayingMovie.original_language
                                 }
                             />
                         );
@@ -83,4 +83,4 @@ const PopularMovie: FC = () => {
     );
 };
 
-export default PopularMovie;
+export default NowPlayingMovie;
